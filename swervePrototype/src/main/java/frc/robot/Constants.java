@@ -23,11 +23,10 @@ import swervelib.math.Matter;
 public final class Constants {
 
     // public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
-    public static final double ROBOT_MASS = 12; // 32lbs * kg per pound (test)
+    public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound (test)
     public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, 0), ROBOT_MASS);
-    public static final Matter BATTERY_MATTER    = new Matter(new Translation3d(0, -0.25, 0), 50);
     public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-    public static List MATTERLIST = List.of(CHASSIS,BATTERY_MATTER);
+    public static List MATTERLIST = List.of(CHASSIS);
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -40,14 +39,14 @@ public final class Constants {
   }
 
   public static class SwerveConstants{
-    public static final double kSwerveSteeringRatio = 16.8;
+    public static final double kSwerveSteeringRatio = 21.428471;
   }
 
   public static final class AutonConstantss
   {
 
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
-    public static final PIDConstants ANGLE_PID   = new PIDConstants(0.4, 0, 0.01);
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0);
+    public static final PIDConstants ANGLE_PID   = new PIDConstants(0, 0, 0);
   }
 
   public static final class DrivebaseConstants

@@ -64,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         swerveDrive.setHeadingCorrection(false);
         swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
-        //setupPathPlanner();
+        setupPathPlanner();
     }
 
     public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controlCfg)
@@ -117,7 +117,6 @@ public class SwerveSubsystem extends SubsystemBase {
                 0.0   
             );
     }
-
     //Comando de controle remoto do swerve utilizando a orientação e os translation values como setpoint
     //@param locomoção x e y das rodas elevado a 3 para controles mais fluidos
     //@param orientação x e y do robô para calcular o ângulo dos joysticks
@@ -172,6 +171,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY,
      DoubleSupplier angularRotationX)
   {
+    swerveDrive.setHeadingCorrection(true);
     return run(() -> {
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
@@ -247,6 +247,24 @@ public class SwerveSubsystem extends SubsystemBase {
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
+  }
+
+  private boolean isRedAlliance()
+  {
+    var alliance = DriverStation.getAlliance();
+    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+  }
+
+  public void zeroGyroWithAlliance()
+  {
+    if(isRedAlliance() == true)
+    {
+      zeroGyro();
+
+      resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
+    }else{
+      zeroGyro();
+    }
   }
 
   public void setMotorBrake(boolean brake)
