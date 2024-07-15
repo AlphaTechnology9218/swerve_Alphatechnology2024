@@ -8,6 +8,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -62,8 +63,8 @@ public class SwerveSubsystem extends SubsystemBase {
         }catch (Exception e){
             throw new RuntimeException(e);   
         }
-        swerveDrive.setHeadingCorrection(false);
-        swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
+        
+        
         setupPathPlanner();
     }
 
@@ -81,8 +82,8 @@ public class SwerveSubsystem extends SubsystemBase {
         this::getRobotVelocity, 
         this::setChassisSpeeds,
         new HolonomicPathFollowerConfig(
-                                        Constants.AutonConstantss.TRANSLATION_PID, 
-                                        Constants.AutonConstantss.ANGLE_PID,
+                                        Constants.AutonConstants.TRANSLATION_PID, 
+                                        Constants.AutonConstants.ANGLE_PID,
                                          4.5,
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          new ReplanningConfig()
@@ -172,6 +173,8 @@ public class SwerveSubsystem extends SubsystemBase {
      DoubleSupplier angularRotationX)
   {
     swerveDrive.setHeadingCorrection(true);
+    swerveDrive.setCosineCompensator(true);
+    swerveDrive.setChassisDiscretization(true, 0.005);
     return run(() -> {
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),

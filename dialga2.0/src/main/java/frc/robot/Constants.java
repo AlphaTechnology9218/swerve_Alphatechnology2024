@@ -9,7 +9,6 @@ import java.util.List;
 import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
 /**
@@ -30,6 +29,7 @@ public final class Constants {
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kSystemControllerPort = 1;
 
     // Joystick Deadband
     public static final double LEFT_X_DEADBAND  = 0.1;
@@ -42,11 +42,11 @@ public final class Constants {
     public static final double kSwerveSteeringRatio = 21.428471;
   }
 
-  public static final class AutonConstantss
+  public static final class AutonConstants
   {
 
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0);
-    public static final PIDConstants ANGLE_PID   = new PIDConstants(0, 0, 0);
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7, 0, 0);
+    public static final PIDConstants ANGLE_PID   = new PIDConstants(11, 0, 0);
   }
 
   public static final class DrivebaseConstants
