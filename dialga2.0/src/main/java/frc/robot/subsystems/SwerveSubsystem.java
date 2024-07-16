@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import java.io.File;
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
@@ -36,6 +37,8 @@ public class SwerveSubsystem extends SubsystemBase {
   
    
     private final SwerveDrive swerveDrive;
+
+    private final Pigeon2 pigeon = new Pigeon2(13);
 
     public double maximumSpeed = Units.feetToMeters(14.5);
 
@@ -173,8 +176,7 @@ public class SwerveSubsystem extends SubsystemBase {
      DoubleSupplier angularRotationX)
   {
     swerveDrive.setHeadingCorrection(true);
-    swerveDrive.setCosineCompensator(true);
-    swerveDrive.setChassisDiscretization(true, 0.005);
+    swerveDrive.setChassisDiscretization(true, 0.02);
     return run(() -> {
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
@@ -250,6 +252,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
+    pigeon.reset();
   }
 
   private boolean isRedAlliance()

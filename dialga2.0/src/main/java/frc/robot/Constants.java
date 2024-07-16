@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.List;
 
+ 
 import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.geometry.Translation3d;
@@ -44,9 +45,16 @@ public final class Constants {
 
   public static final class AutonConstants
   {
+    public static double translationP;
+    public static double translationI;
+    public static double translationD;
 
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7, 0, 0);
-    public static final PIDConstants ANGLE_PID   = new PIDConstants(11, 0, 0);
+    public static double AngleP;
+    public static double AngleI;
+    public static double AngleD;
+
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7, 0.0, 0.0);
+    public static final PIDConstants ANGLE_PID   = new PIDConstants(11, 0.0, 0.0);
   }
 
   public static final class DrivebaseConstants
