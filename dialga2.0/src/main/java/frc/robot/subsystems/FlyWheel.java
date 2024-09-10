@@ -19,6 +19,8 @@ public class FlyWheel extends SubsystemBase{
     //Button xbButton
 
     public void FlyWheelActive(double speed){
+        flyWheelMotor0.setOpenLoopRampRate(1);
+        flyWheelMotor1.setOpenLoopRampRate(1);
         flyWheelMotor1.setInverted(false);
         flyWheelMotor0.setInverted(false);
         flyWheelMotor0.set(speed);
@@ -27,6 +29,14 @@ public class FlyWheel extends SubsystemBase{
     public void FlyWheelStop(){
         flyWheelMotor0.set(0);
         flyWheelMotor1.set(0);
+    }
+
+    public double FlyWheelSpeedLower(){
+        return flyWheelMotor0.getEncoder().getVelocity();
+    }
+
+    public double FlyWheelSpeedUpper(){
+        return flyWheelMotor1.getEncoder().getVelocity();
     }
    
     }

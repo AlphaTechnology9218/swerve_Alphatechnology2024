@@ -12,6 +12,8 @@ public class ArmDrive extends Command{
 
     private ArmSubsystem arm;
     private Supplier<Double> speed;
+    private double sp;
+    
 
     public ArmDrive(ArmSubsystem subsystem, Supplier<Double> speed){
         this.arm = subsystem;
@@ -23,13 +25,20 @@ public class ArmDrive extends Command{
     @Override
     public void initialize(){
         
+        
     }
 
     @Override
     public void execute(){
        SmartDashboard.
         putNumber("absoluteArmPosition", arm.getAbsEncoder().getAbsolutePosition());
-        arm.armDrive(speed.get()); 
+        sp = arm.getAbsEncoder().getAbsolutePosition();
+        if(sp > 0.8){
+            arm.armDrive(0.4);
+        }else{
+            arm.armDrive(speed.get());
+        }
+         
     }
 
     @Override

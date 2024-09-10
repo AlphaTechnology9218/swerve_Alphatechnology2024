@@ -3,13 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import java.util.List;
-
- 
 import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
 /**
@@ -22,11 +19,11 @@ import swervelib.math.Matter;
  */
 public final class Constants {
 
-    // public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
-    public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound (test)
-    public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, 0), ROBOT_MASS);
-    public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-    public static List MATTERLIST = List.of(CHASSIS);
+  public static final double ROBOT_MASS = 40.5; // 32lbs * kg per pound
+  public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, 0), ROBOT_MASS);
+  public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
+  public static final double MAX_SPEED  = Units.feetToMeters(14.5);
+      // Maximum speed of the robot in meters per second, used to limit acceleration.
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -40,21 +37,16 @@ public final class Constants {
   }
 
   public static class SwerveConstants{
-    public static final double kSwerveSteeringRatio = 21.428471;
+    public static final double kSwerveSteeringRatio = 21.428571428571428571428571428571;
   }
 
   public static final class AutonConstants
   {
-    public static double translationP;
-    public static double translationI;
-    public static double translationD;
 
-    public static double AngleP;
-    public static double AngleI;
-    public static double AngleD;
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(6.5,0.00000008,1.39);
+    public static final PIDConstants ANGLE_PID   = new PIDConstants(0, 0, 0);
 
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(7, 0.0, 0.0);
-    public static final PIDConstants ANGLE_PID   = new PIDConstants(11, 0.0, 0.0);
+    
   }
 
   public static final class DrivebaseConstants

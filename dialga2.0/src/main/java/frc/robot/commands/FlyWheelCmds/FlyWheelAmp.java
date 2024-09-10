@@ -8,7 +8,7 @@ import frc.robot.subsystems.FlyWheel;
 
 
 
-public class FlyWheelCmd extends Command {
+public class FlyWheelAmp extends Command {
    
     FlyWheel flyWheelSubsystem;
     
@@ -16,7 +16,7 @@ public class FlyWheelCmd extends Command {
    
  
 
- public FlyWheelCmd(FlyWheel subsystem) {
+ public FlyWheelAmp(FlyWheel subsystem) {
         this.flyWheelSubsystem = subsystem;
         addRequirements(subsystem);  
  }
@@ -27,7 +27,7 @@ public class FlyWheelCmd extends Command {
     }
     @Override
     public void execute() {
-      flyWheelSubsystem.FlyWheelActive(1);
+      flyWheelSubsystem.FlyWheelActive(0.2);
       SmartDashboard.putNumber("flywheelSpeedLower", flyWheelSubsystem.FlyWheelSpeedLower());
       SmartDashboard.putNumber("flywheelSpeedUpper", flyWheelSubsystem.FlyWheelSpeedUpper());
 

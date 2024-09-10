@@ -8,10 +8,10 @@ import edu.wpi.first.math.controller.PIDController;
 public class ArmDrivePIDCmd extends Command{
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem armSubsystem;
-  private double spRest, spCatch, spPoint, spCarry, sp;
-  private static final double kP = 9;
-  private static final double kI = 0.40;
-  private static final double kD = 0.5;
+  private double spRest, spSpeaker, spAmp, spPass, sp;
+  private static final double kP = 5.5;
+  private static final double kI = 0;
+  private static final double kD = 0;
   private final int POV;
   boolean releaseAtSetPoint;
 
@@ -19,13 +19,13 @@ public class ArmDrivePIDCmd extends Command{
 
   public ArmDrivePIDCmd(ArmSubsystem subsystem, int POV, boolean releaseAtSetPoint){
     this.armSubsystem = subsystem;
-    this.spRest = 0.385;
-    this.spCatch = 0.325;
-    this.spCarry = 0.280;
-    this.spPoint = 0.175;
+    this.spRest = 0.50;
+    this.spSpeaker = 0.57;
+    this.spAmp = 0.655;
+    this.spPass = 0.635;
     this.sp = this.spRest;
     this.POV = POV;
-    this.pidController.setTolerance(0.01);
+    this.pidController.setTolerance(0.1);
     this.releaseAtSetPoint = releaseAtSetPoint;
 
     addRequirements(subsystem);
@@ -43,18 +43,27 @@ public class ArmDrivePIDCmd extends Command{
         sp = spRest;
         break;
       case 90:
-        sp = spCatch;
+        sp = spSpeaker;
         break;
       case 180:
-        sp = spPoint; 
+        sp = spAmp; 
         break;
       case 270:
-        sp = spCarry;
+        sp = spPass;
         break;
       }
       pidController.setSetpoint(sp);
+    //&& armSubsystem.getAbsEncoder().getAbsolutePosition() >= sp
       double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition());
-      armSubsystem.armDrive(-speed);
+      if (armSubsystem.getAbsEncoder().getAbsolutePosition() != 0){
+        if (speed < 0 ){
+          armSubsystem.armDrive(0.2);
+        }
+        else{
+          armSubsystem.armDrive(-speed);
+        }
+      }
+  
     }
     
   public void end(boolean interrupted) {
