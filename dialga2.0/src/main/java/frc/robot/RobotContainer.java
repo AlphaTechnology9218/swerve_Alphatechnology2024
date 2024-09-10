@@ -118,6 +118,7 @@ public class RobotContainer {
       chooser.addOption("AutonomoLadoDireito", new PathPlannerAuto("autonomoLadoDireito"));
       chooser.addOption("AutonomoCentro", new PathPlannerAuto("autonomoCentro"));
       chooser.addOption("braco", new PathPlannerAuto("TesteBraco"));
+      chooser.addOption("intake", new PathPlannerAuto("TesteIntake"));
       SmartDashboard.putData("CHOOSER", chooser);
   }   
 
