@@ -111,6 +111,8 @@ public class RobotContainer {
     
     
   }
+
+
   
   private void initializeChooser(){
       chooser.addOption("Reta", new PathPlannerAuto("testeRetaPid"));

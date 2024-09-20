@@ -18,22 +18,19 @@ public class IntakeInCmd extends Command{
     @Override
     public void execute() {
         in = intakeSubsystem.gamePieceIn();
-        intakeSubsystem.IntakeDrive(-0.5);
+         if(in == false){
+            intakeSubsystem.IntakeDrive(-1);
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        intakeSubsystem.IntakeStop();
+        
     }
 
     @Override
     public boolean isFinished() {
-        boolean finished;
-        if(in == true){
-            finished = true;
-        }else{
-            finished = false;
-        }
-        return finished;
+    return in;
+        
     }
 }

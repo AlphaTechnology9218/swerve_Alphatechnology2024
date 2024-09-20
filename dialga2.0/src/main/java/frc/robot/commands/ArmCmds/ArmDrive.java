@@ -2,7 +2,6 @@ package frc.robot.commands.ArmCmds;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -30,8 +29,6 @@ public class ArmDrive extends Command{
 
     @Override
     public void execute(){
-       SmartDashboard.
-        putNumber("absoluteArmPosition", arm.getAbsEncoder().getAbsolutePosition());
         sp = arm.getAbsEncoder().getAbsolutePosition();
         if(sp > 0.8){
             arm.armDrive(0.4);
