@@ -20,10 +20,12 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.AutonConstants;
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -43,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Swerve drive object.
    */
-  private final SwerveDrive         swerveDrive;
+  private final SwerveDrive swerveDrive;
   
   private final Pigeon2 pigeon = new Pigeon2(13);
 
@@ -72,13 +74,14 @@ public class SwerveSubsystem extends SubsystemBase
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED);
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.SwerveConstants.MAX_SPEED);
       // Alternative method if you don't want to supply the conversion factor via JSON files.
       // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
     } catch (Exception e)
     {
       throw new RuntimeException(e);
     }
+    
     swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(true);//!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
@@ -92,7 +95,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.MAX_SPEED);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.SwerveConstants.MAX_SPEED);
   }
 
   /**
@@ -328,16 +331,6 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.drive(velocity);
   }
 
-  @Override
-  public void periodic()
-  {
-  }
-
-  @Override
-  public void simulationPeriodic()
-  {
-  }
-
   /**
    * Get the swerve drive kinematics object.
    *
@@ -481,7 +474,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         headingX,
                                                         headingY,
                                                         getHeading().getRadians(),
-                                                        Constants.MAX_SPEED);
+                                                        Constants.SwerveConstants.MAX_SPEED);
   }
 
   /**
@@ -501,7 +494,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         scaledInputs.getY(),
                                                         angle.getRadians(),
                                                         getHeading().getRadians(),
-                                                        Constants.MAX_SPEED);
+                                                        Constants.SwerveConstants.MAX_SPEED);
   }
 
   /**
@@ -568,6 +561,49 @@ public class SwerveSubsystem extends SubsystemBase
   public void addFakeVisionReading()
   {
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
+  }
+
+  public Command aimAtTarget()
+  {
+    return run(() -> {
+      //if (result.hasTargets()){
+        drive(getTargetSpeeds(0,0,Rotation2d.fromDegrees(getVisionRotationAngle())));
+      //}
+    });
+  }
+  public Command driveAimAtTarget(DoubleSupplier translationX, DoubleSupplier translationY){
+    return run(() -> {
+      if(isValidVisionTarget()){
+        System.out.println("TRYING TO ROTATE WITH: " + -getVisionRotationAngle()/70 * swerveDrive.getMaximumAngularVelocity());
+        swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
+                                          Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
+                                          -getVisionRotationAngle()/70 * swerveDrive.getMaximumAngularVelocity(),true,false);
+      }
+    });
+  }
+  public SwerveDrive getSwerve(){
+    return swerveDrive;
+  }
+  //Limelight
+  public double getVisionRotationAngle(){
+    return LimelightHelpers.getTX("limelight-alpha");
+  }
+  public boolean isValidVisionTarget(){
+    return LimelightHelpers.getTV("limelight-alpha"); 
+  }
+  public void setVisionTargetID(int id){
+    LimelightHelpers.setPriorityTagID("limelight-alpha", id);
+  }
+
+   @Override
+  public void periodic()
+  {
+    SmartDashboard.putNumber("Limelight X", getVisionRotationAngle());
+  }
+
+  @Override
+  public void simulationPeriodic()
+  {
   }
 
   

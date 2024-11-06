@@ -1,23 +1,33 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 
 public class Intake extends SubsystemBase{
-
-        private final int IntakeMotorID = 18;
-        private final int SensorAnalogChannel = 3;
         
-        AnalogPotentiometer intakeInfraRedSensor = new AnalogPotentiometer(SensorAnalogChannel, 5, -0.4);
+        AnalogPotentiometer intakeInfraRedSensor = new AnalogPotentiometer(IntakeConstants.SensorAnalogChannel, 5, -0.4);
+        CANSparkMax IntakeMotor = new CANSparkMax(IntakeConstants.IntakeMotorID, MotorType.kBrushed);
 
-        CANSparkMax IntakeMotor = new CANSparkMax(IntakeMotorID, MotorType.kBrushed);
-        
+        public Intake(){
+            IntakeStop();
 
+            IntakeMotor.restoreFactoryDefaults();
+
+            IntakeMotor.setIdleMode(IdleMode.kBrake);
+
+            IntakeMotor.setSmartCurrentLimit(40, 60);
+
+            IntakeMotor.setInverted(false);
+
+            IntakeMotor.burnFlash();
+        }
         
         public void IntakeDrive(double val){
             IntakeMotor.set(val);
@@ -34,16 +44,6 @@ public class Intake extends SubsystemBase{
             return IntakeMotor.getOutputCurrent();
         }
 
-        public boolean gamePieceIn(){
-            double sensorVal = intakeInfraRedSensor.get();
-            boolean in = false;
-            if(sensorVal < 1 ){
-                in = false;
-            }else if(sensorVal > 1){
-                in = true;
-            }
-            return in;
-        }
         
         public double getIntakeSensorVal(){
             double val = intakeInfraRedSensor.get();
@@ -52,7 +52,6 @@ public class Intake extends SubsystemBase{
 
         @Override
         public void periodic() {
-            SmartDashboard.putBoolean("Sensor Value Test", gamePieceIn());
             SmartDashboard.putNumber("Numerical Sensor Value Test", getIntakeSensorVal());
         }
 }

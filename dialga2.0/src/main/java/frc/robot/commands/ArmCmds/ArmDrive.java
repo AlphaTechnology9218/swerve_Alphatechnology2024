@@ -1,4 +1,4 @@
-package frc.robot.commands.ArmCmds;
+/*package frc.robot.commands.ArmCmds;
 
 import java.util.function.Supplier;
 
@@ -26,10 +26,10 @@ public class ArmDrive extends Command{
         
         
     }
-
+ 
     @Override
     public void execute(){
-        sp = arm.getAbsEncoder().getAbsolutePosition();
+        sp = arm.getAbsEncoder().getAbsolutePosition() - arm.getAbsEncoder().getPositionOffset();
         if(sp > 0.8){
             arm.armDrive(0.4);
         }else{
@@ -47,4 +47,4 @@ public class ArmDrive extends Command{
     public boolean isFinished(){
         return false;  
     }
-}
+}*/

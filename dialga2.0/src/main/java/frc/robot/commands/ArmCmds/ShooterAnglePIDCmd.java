@@ -1,19 +1,15 @@
-package frc.robot.commands.ArmCmds;
+/*package frc.robot.commands.ArmCmds;
 
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ShooterAnglePIDCmd extends Command{
     ArmSubsystem armSubsystem;
-    private static final double kP = 5.5;
-    private static final double kI = 0;
-    private static final double kD = 0;
-    private static final double sp = 0.57;
 
-
-    private PIDController pidController = new PIDController(kP, kI, kD);
+    private PIDController pidController = new PIDController(ArmConstants.kP,ArmConstants.kI, ArmConstants.kD);
     
 
     public ShooterAnglePIDCmd(ArmSubsystem subsystem){
@@ -27,14 +23,15 @@ public class ShooterAnglePIDCmd extends Command{
   public void initialize() {
     pidController.reset();
     pidController.setTolerance(0.1);
-      pidController.setSetpoint(sp);
+      pidController.setSetpoint(ArmConstants.ShooterSetPoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //&& armSubsystem.getAbsEncoder().getAbsolutePosition() >= sp
-      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition());
+      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition() -
+      armSubsystem.getAbsEncoder().getPositionOffset());
       if (armSubsystem.getAbsEncoder().getAbsolutePosition() != 0){
         if (speed < 0 ){
           armSubsystem.armDrive(0.2);
@@ -54,4 +51,4 @@ public class ShooterAnglePIDCmd extends Command{
   public boolean isFinished() {
     return false;
   }
-}
+}*/

@@ -1,32 +1,29 @@
-package frc.robot.subsystems;
+/*package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
-    
-    private static final int arm0ID = 14;
 
-    private static final int arm1ID  = 15;
 
-    private CANSparkMax arm0 = 
-    new CANSparkMax(arm0ID, MotorType.kBrushless);
-
-    private CANSparkMax arm1 = 
-    new CANSparkMax(arm1ID, MotorType.kBrushless);
+    CANSparkMax arm0 = 
+    new ConfiguredCanSparkMax().BrushlessMotor(ArmConstants.arm0ID, IdleMode.kBrake);
+    CANSparkMax arm1 = 
+    new ConfiguredCanSparkMax().BrushlessMotor(ArmConstants.arm1ID, IdleMode.kBrake);
 
     private DutyCycleEncoder absoluteEncoder = 
-    new DutyCycleEncoder(5);
+    new DutyCycleEncoder(ArmConstants.armAbsIncoderChannel);
 
     public void armDrive(double val){
-        arm0.setOpenLoopRampRate(0.5);
-        arm1.setOpenLoopRampRate(0.5);
+        arm0.setOpenLoopRampRate(ArmConstants.armDriveOpenLoopRate);
+        arm1.setOpenLoopRampRate(ArmConstants.armDriveOpenLoopRate);
         arm0.setInverted(false);
-        arm1.setInverted(true);
+        arm1.setInverted(true); 
         arm0.set(val);
         arm1.set(val);
     } 
@@ -37,15 +34,14 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public DutyCycleEncoder getAbsEncoder(){
-        absoluteEncoder.setPositionOffset(0.2);
-        return absoluteEncoder;
-        
+        absoluteEncoder.setPositionOffset(ArmConstants.armABSEEncoderOffset);
+        return absoluteEncoder;   
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("absoluteArmPosition", getAbsEncoder().getAbsolutePosition());
+        SmartDashboard.putNumber("absoluteArmPosition", getAbsEncoder().getAbsolutePosition() - getAbsEncoder().getPositionOffset());
     }
 
     
-}
+}*/

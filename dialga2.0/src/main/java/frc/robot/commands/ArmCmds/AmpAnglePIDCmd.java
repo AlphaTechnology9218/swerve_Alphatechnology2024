@@ -1,19 +1,15 @@
-package frc.robot.commands.ArmCmds;
+/*package frc.robot.commands.ArmCmds;
 
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class AmpAnglePIDCmd extends Command{
     ArmSubsystem armSubsystem;
-    private static final double kP = 5.5;
-    private static final double kI = 0;
-    private static final double kD = 0;
-    private static final double sp = 0.655;
 
-
-    private PIDController pidController = new PIDController(kP, kI, kD);
+    private PIDController pidController = new PIDController(ArmConstants.kP,ArmConstants.kI, ArmConstants.kD);
     
 
     public AmpAnglePIDCmd(ArmSubsystem subsystem){
@@ -31,9 +27,10 @@ public class AmpAnglePIDCmd extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      pidController.setSetpoint(sp);
+      pidController.setSetpoint(ArmConstants.AmpSetPoint);
     //&& armSubsystem.getAbsEncoder().getAbsolutePosition() >= sp
-      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition());
+      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition() -
+       armSubsystem.getAbsEncoder().getPositionOffset());
       if (armSubsystem.getAbsEncoder().getAbsolutePosition() != 0){
         if (speed < 0 ){
           armSubsystem.armDrive(0.2);
@@ -53,4 +50,4 @@ public class AmpAnglePIDCmd extends Command{
   public boolean isFinished() {
     return false;
   }
-}
+}*/

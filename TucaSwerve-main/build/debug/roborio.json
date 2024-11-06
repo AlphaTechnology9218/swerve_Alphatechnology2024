@@ -1,9 +1,0 @@
-[
-  {
-    "type": "java",
-    "name": "frcJava",
-    "port": 8349,
-    "target": "10.92.18.31",
-    "project": "TucaSwerve-main"
-  }
-]

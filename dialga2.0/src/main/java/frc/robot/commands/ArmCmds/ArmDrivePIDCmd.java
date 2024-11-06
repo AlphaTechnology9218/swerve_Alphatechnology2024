@@ -1,6 +1,7 @@
-package frc.robot.commands.ArmCmds;
+/*package frc.robot.commands.ArmCmds;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -9,20 +10,17 @@ public class ArmDrivePIDCmd extends Command{
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem armSubsystem;
   private double spRest, spSpeaker, spAmp, spPass, sp;
-  private static final double kP = 5.5;
-  private static final double kI = 0;
-  private static final double kD = 0;
   private final int POV;
   boolean releaseAtSetPoint;
 
-  private PIDController pidController = new PIDController(kP, kI, kD);
+  private PIDController pidController = new PIDController(ArmConstants.kP,ArmConstants.kI, ArmConstants.kD);
 
   public ArmDrivePIDCmd(ArmSubsystem subsystem, int POV, boolean releaseAtSetPoint){
     this.armSubsystem = subsystem;
-    this.spRest = 0.50;
-    this.spSpeaker = 0.57;
-    this.spAmp = 0.655;
-    this.spPass = 0.635;
+    this.spRest = ArmConstants.RestSetPoint;
+    this.spSpeaker = ArmConstants.ShooterSetPoint;
+    this.spAmp = ArmConstants.AmpSetPoint;
+    this.spPass = 0.60;
     this.sp = this.spRest;
     this.POV = POV;
     this.pidController.setTolerance(0.1);
@@ -54,7 +52,8 @@ public class ArmDrivePIDCmd extends Command{
       }
       pidController.setSetpoint(sp);
     //&& armSubsystem.getAbsEncoder().getAbsolutePosition() >= sp
-      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition());
+      double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition() - 
+      armSubsystem.getAbsEncoder().getPositionOffset());
       if (armSubsystem.getAbsEncoder().getAbsolutePosition() != 0){
         if (speed < 0 ){
           armSubsystem.armDrive(0.2);
@@ -78,4 +77,4 @@ public class ArmDrivePIDCmd extends Command{
   
   
     
-}
+}*/

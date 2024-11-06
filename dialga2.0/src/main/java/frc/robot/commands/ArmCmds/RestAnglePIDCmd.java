@@ -1,19 +1,16 @@
-package frc.robot.commands.ArmCmds;
+/*package frc.robot.commands.ArmCmds;
 
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class RestAnglePIDCmd extends Command{
     ArmSubsystem armSubsystem;
-    private static final double kP = 5.5;
-    private static final double kI = 0;
-    private static final double kD = 0;
-    private static final double sp = 0.499;
 
 
-    private PIDController pidController = new PIDController(kP, kI, kD);
+    private PIDController pidController = new PIDController(ArmConstants.kP,ArmConstants.kI, ArmConstants.kD);
     
 
     public RestAnglePIDCmd(ArmSubsystem subsystem){
@@ -31,7 +28,7 @@ public class RestAnglePIDCmd extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      pidController.setSetpoint(sp);
+      pidController.setSetpoint(ArmConstants.RestSetPoint);
     //&& armSubsystem.getAbsEncoder().getAbsolutePosition() >= sp
       double speed = pidController.calculate(armSubsystem.getAbsEncoder().getAbsolutePosition());
       if (armSubsystem.getAbsEncoder().getAbsolutePosition() != 0){
@@ -53,4 +50,4 @@ public class RestAnglePIDCmd extends Command{
   public boolean isFinished() {
     return pidController.atSetpoint();
   }
-}
+}*/

@@ -4,7 +4,8 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeInCmd extends Command{
     Intake intakeSubsystem;
-    boolean in;
+    double in;
+    boolean end;
     public IntakeInCmd(Intake subsystem){
         this.intakeSubsystem = subsystem;
         addRequirements(subsystem);
@@ -17,10 +18,9 @@ public class IntakeInCmd extends Command{
 
     @Override
     public void execute() {
-        in = intakeSubsystem.gamePieceIn();
-         if(in == false){
-            intakeSubsystem.IntakeDrive(-1);
-        }
+        in = intakeSubsystem.getIntakeSensorVal();
+        intakeSubsystem.IntakeDrive(-1);
+        
     }
 
     @Override
@@ -30,7 +30,11 @@ public class IntakeInCmd extends Command{
 
     @Override
     public boolean isFinished() {
-    return in;
-        
+        if(in < 1){
+            end = false;
+        }else if(in > 1){
+            end = true;
+        }
+        return end;    
     }
 }
