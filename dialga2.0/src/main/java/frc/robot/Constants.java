@@ -59,9 +59,6 @@ public final class Constants {
   {
     public static final int arm0ID = 14;
     public static final int arm1ID  = 15;
-    public static final double ShooterSetPoint = 0.52;
-    public static final double AmpSetPoint = 0.636;
-    public static final double RestSetPoint = 0.46;
     public static final double Kg = 1; //4
     public static final double Ks = -14; //-12.5
     public static final double Kvspeed = 1;
