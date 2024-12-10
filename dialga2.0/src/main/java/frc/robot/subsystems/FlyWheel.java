@@ -19,6 +19,7 @@ public class FlyWheel extends SubsystemBase{
     CANSparkMax flyWheelFollower = new CANSparkMax(FlywheelConstants.flyWheelMotorID1, MotorType.kBrushless);
     private final SparkPIDController pid;
     private final RelativeEncoder encoder;
+    private  double setpoint;
 
     public FlyWheel(){
         FlyWheelStop();
@@ -53,6 +54,7 @@ public class FlyWheel extends SubsystemBase{
     public void FlyWheelActive(double setpointRPM){
         pid.setReference(setpointRPM
         , ControlType.kVelocity);
+        setpoint = setpointRPM;
     }
 
     
@@ -66,7 +68,7 @@ public class FlyWheel extends SubsystemBase{
     @Override
     public void periodic() {
         SmartDashboard.putNumber("FlyWheelMotorVelocity", encoder.getVelocity());
-        SmartDashboard.putNumber("FlyWheelSetPoint", FlywheelConstants.Setpoint);   
+        SmartDashboard.putNumber("FlyWheelSetPoint", setpoint);   
     }
 
     }

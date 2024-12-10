@@ -10,7 +10,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -62,7 +61,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     NamedCommands.registerCommand("IntakeInCmd", new IntakeInCmd(intake));
-    NamedCommands.registerCommand("FlyWheelCmd", new FlyWheelCmd(flywheel));
+    NamedCommands.registerCommand("FlyWheelCmd", new FlyWheelCmd(flywheel, 1800));
     //NamedCommands.registerCommand("ShooterAnglePIDCmd", new ShooterAnglePIDCmd(arm));
     //NamedCommands.registerCommand("AmpAnglePIDCmd", new AmpAnglePIDCmd(arm));
     //NamedCommands.registerCommand("RestAnglePIDCmd", new RestAnglePIDCmd(arm));
@@ -88,7 +87,6 @@ public class RobotContainer {
     
 
       drivebase.setDefaultCommand(baseDriveCommand);
-      //arm.setDefaultCommand(new ArmDrive(arm, ()-> m_systemController.getLeftY() * 0.6));
       intake.setDefaultCommand(new IntakeCmd(intake, () -> m_systemController.getRightTriggerAxis(),
       () -> m_systemController.getLeftTriggerAxis()));
       }
@@ -115,16 +113,13 @@ public class RobotContainer {
     m_driverController.button(3).onTrue(Commands.runOnce(drivebase::zeroGyro));
     m_driverController.button(4).onTrue(Commands.runOnce(drivebase::resetIMU));
 
-    m_systemController.rightBumper().toggleOnTrue(new FlyWheelCmd(flywheel));
+    m_driverController.button(8).toggleOnTrue(new FlyWheelCmd(flywheel, 1800));
     m_systemController.leftBumper().toggleOnTrue(new FlyWheelAmp(flywheel));
-
-    //m_systemController.pov(180).whileTrue(new ArmDrivePIDCmd(arm, 0, false));
-    //m_systemController.pov(90).whileTrue(new ArmDrivePIDCmd(arm, 90, false));
-    //m_systemController.pov(0).whileTrue(new ArmDrivePIDCmd(arm, 180, false));
-    //m_systemController.pov(270).whileTrue(new ArmDrivePIDCmd(arm, 270, false));
-
-    m_driverController.button(11).onTrue(trapArm.setArmGoalCommand(30));
-   
+    m_driverController.button(7).onTrue(trapArm.setArmGoalCommand(50, 10));
+    m_driverController.button(9).onTrue(trapArm.setArmGoalCommand(40, 10));
+    m_driverController.button(10).onTrue(trapArm.setArmGoalCommand(30, 10));
+    m_driverController.button(11).onTrue(trapArm.setArmGoalCommand(20, 10));
+    m_driverController.button(12).onTrue(trapArm.setArmGoalCommand(0, -6));
    
   }
 

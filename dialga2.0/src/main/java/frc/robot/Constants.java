@@ -68,20 +68,21 @@ public final class Constants {
     public static final double ShooterSetPoint = 0.52;
     public static final double AmpSetPoint = 0.636;
     public static final double RestSetPoint = 0.46;
-    public static final double Kg = 0;
-    public static final double Ks = 0.3;
-    public static final double Kvspeed = 0;
+    public static final double Kg = 1; //4
+    public static final double Ks = -14; //-12.5
+    public static final double Kvspeed = 1;
     public static final double Kvacce = 0;
-    public static final double Kp = 0;
+    public static final double Kp = 1;
     public static final double Ki = 0;
-    public static final double Kd = 0;
+    public static final double Kd = 0.1;
     public static final double Kiz = 0;
     public static final double KMaxVspeedDegreesPerSec = 30;
     public static final double KMaxVacceDegreesPerSecSquared = 45;
     public static final double kArmItialPositionDegrees = 0;
     public static final double kArmMaxOutput = 1;
     public static final double kArmMinOutput = -1;
-    public static final double ArmConversionFactor = (1/125 * 14/40) * 360;
+    public static final double ArmPosConversionFactor = (1/125 * 14/40) * 360;
+    public static final double ArmVeloConversionFactor = (1/125 * 14/40);
 
   }
 

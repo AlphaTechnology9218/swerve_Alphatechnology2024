@@ -15,8 +15,9 @@ public class FlyWheelCmd extends Command {
    
  
 
- public FlyWheelCmd(FlyWheel subsystem) {
+ public FlyWheelCmd(FlyWheel subsystem, double setpoint) {
         this.flyWheelSubsystem = subsystem;
+        this.setpoint = setpoint;
         addRequirements(subsystem);  
  }
 

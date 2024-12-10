@@ -96,6 +96,7 @@ public class SwerveSubsystem extends SubsystemBase
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.SwerveConstants.MAX_SPEED);
+    
   }
 
   /**
@@ -566,9 +567,7 @@ public class SwerveSubsystem extends SubsystemBase
   public Command aimAtTarget()
   {
     return run(() -> {
-      //if (result.hasTargets()){
         drive(getTargetSpeeds(0,0,Rotation2d.fromDegrees(getVisionRotationAngle())));
-      //}
     });
   }
   public Command driveAimAtTarget(DoubleSupplier translationX, DoubleSupplier translationY){
