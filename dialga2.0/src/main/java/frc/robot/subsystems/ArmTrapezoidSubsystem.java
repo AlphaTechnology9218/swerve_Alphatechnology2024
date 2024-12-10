@@ -56,7 +56,7 @@ public class ArmTrapezoidSubsystem extends TrapezoidProfileSubsystem{
         encoder.setVelocityConversionFactor(ArmConstants.ArmVeloConversionFactor);
 
         armPid = armLeader.getPIDController();
-        armPid.setP(ArmConstants.kP,0);
+        armPid.setP(ArmConstants.Kp,0);
         armPid.setI(ArmConstants.Ki,0);
         armPid.setD(ArmConstants.Kd,0);
         armPid.setIZone(ArmConstants.Kiz, 0);

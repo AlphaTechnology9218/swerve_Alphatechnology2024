@@ -59,12 +59,6 @@ public final class Constants {
   {
     public static final int arm0ID = 14;
     public static final int arm1ID  = 15;
-    public static final int armAbsIncoderChannel = 5;
-    public static final double armDriveOpenLoopRate = 0.5;
-    public static final double armABSEEncoderOffset = 0.358;
-    public static final double kP = 5.5;
-    public static final double kI = 0;
-    public static final double kD = 0;
     public static final double ShooterSetPoint = 0.52;
     public static final double AmpSetPoint = 0.636;
     public static final double RestSetPoint = 0.46;
